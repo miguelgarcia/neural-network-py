@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 # Mini example, classify points in two teams:
 # "team 1" if x > y, "team 0" otherwise
 import numpy as np
