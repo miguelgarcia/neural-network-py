@@ -36,8 +36,8 @@ class NeuralLayer:
 
     def __init__(self, neuron_count, prev_layer_neuron_count):
         self.weights = np.random.random(
-            (neuron_count, prev_layer_neuron_count))
-        self.biases = np.random.random(neuron_count)
+            (neuron_count, prev_layer_neuron_count))  - 0.5
+        self.biases = np.random.random(neuron_count) - 0.5
         self.output = np.zeros(neuron_count)
         self.neuron_count = neuron_count
 

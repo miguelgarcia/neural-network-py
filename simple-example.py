@@ -28,7 +28,7 @@ for _ in range(0, 100):
 
 print("Training")
 t = Trainer()
-t.train(n, training_data, 0.5, 1000, 5)
+t.train(n, training_data, 0.25, 10, 10, 0.00001, 15, None, True)
 
 print("Training ready")
 
