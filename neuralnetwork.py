@@ -36,7 +36,7 @@ class NeuralLayer:
 
     def __init__(self, neuron_count, prev_layer_neuron_count):
         self.weights = np.random.random(
-            (neuron_count, prev_layer_neuron_count))  - 0.5
+            (neuron_count, prev_layer_neuron_count)) - 0.5
         self.biases = np.random.random(neuron_count) - 0.5
         self.output = np.zeros(neuron_count)
         self.neuron_count = neuron_count
@@ -162,3 +162,32 @@ class NeuralNetwork:
             gradients.append([w, b])
             next_layer_delta = delta
         return gradients
+
+def serialize_neural_network(network, file):
+    """ Saves neural network parameters to a file """
+    file.write(str(network.layers_count())+"\n")
+    first = True
+    for layer in network.layers:
+        file.write(str(layer.neuron_count)+"\n")
+    for layer in network.layers:
+        if first:
+            first = False
+        else:
+            file.write(str(layer.weights.ravel().tolist())+"\n")
+            file.write(str(layer.biases.ravel().tolist())+"\n")
+
+def load_from_file(file):
+    """ Loads a neural network from a file """
+    layer_count = int(file.readline())
+    shape = []
+    for _ in range(0, layer_count):
+        shape.append(int(file.readline()))
+    network = NeuralNetwork(shape)
+    for layer in network.layers[1:]:
+        weights = file.readline()
+        weights = np.fromiter(map(float, weights.replace('[', '').replace(']','').split(", ")), dtype=float)
+        layer.weights = weights.reshape(layer.weights.shape)
+        biases = file.readline()
+        layer.biases = np.fromiter(map(float, biases.replace('[', '').replace(']','').split(", ")), dtype=float)
+    return network
+        
