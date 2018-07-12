@@ -5,8 +5,8 @@ import logging
 
 import numpy as np
 
-from neuralnetwork import NeuralNetwork, serialize_neural_network
-from training import Trainer, TrainingDataSample
+from neuralnetwork.network import NeuralNetwork, serialize_neural_network
+from neuralnetwork.training import Trainer, TrainingDataSample
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("simple_example")
@@ -27,7 +27,7 @@ def team(p):
 
 logger.info("Generating training data")
 training_data = []
-for _ in range(0, 100):
+for _ in range(0, 500):
     p = np.random.random(2)
     training_data.append(TrainingDataSample(p, np.array([team(p)])))
 
@@ -39,7 +39,7 @@ trainer.train(
     training_data=training_data,
     learning_step=1,
     batch_iterations=10,
-    batch_size=15,
+    batch_size=10,
     min_improvement_per_batch=0.00001,
     max_batches_without_improvement=15,
     cost_estimator_batch_size=None
